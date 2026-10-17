@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/GMA_Logo.jpg" type="image/x-icon" />
+    <title>Golden Myanmar Alliance - Medical & Energy Solutions</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- GSAP Libraries & Lenis Smooth Scroll CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        brand: {
+                            gold: '#D4AF37',
+                            navy: '#0F172A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html.lenis {
+            height: auto;
+        }
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Interactive Background Canvas Styling */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Adjusted Opacity for Glass Effect to show Moving Background Particles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+        }
+        
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+        }
+
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .dark .glass-input {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animated Back-To-Top Pulse Ring */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 0; }
+            100% { transform: scale(0.95); opacity: 0; }
+        }
+        .pulse-ring-effect::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.5);
+            animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            z-index: -1;
+        }
+
+        /* Initial Hide State for GSAP Fade In */
+        .gsap-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-slate-100 via-amber-50/30 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-amber-500 selection:text-white transition-colors duration-300 min-h-screen relative">
+
+    <!-- Interactive Canvas Background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <div id="top-header" class="glass-panel py-3.5 px-4 text-xs transition-colors duration-300 relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <div class="w-full md:w-auto flex items-center justify-between gap-4">
+                <a href="#" class="flex items-center gap-3 group">
+                    <img class="h-12 sm:h-13 md:h-13 w-auto object-contain transition-transform duration-300 group-hover:scale-105" src="images/GMA-logo-removebg-preview.png" alt="GMA Logo">
+                    <div class="flex flex-col justify-center border-l border-slate-300/60 dark:border-slate-700/60 pl-3">
+                        <span class="font-black text-slate-900 dark:text-white text-base tracking-wider leading-none">GMA</span>
+                        <span class="text-[9px] text-amber-600 dark:text-amber-400 font-bold tracking-tight uppercase block mt-1">Official Enterprise Partner</span>
+                    </div>
+                </a>
+
+                <div class="flex items-center gap-3 text-slate-600 dark:text-slate-300 font-medium text-[10px] md:hidden">
+                    <div class="flex items-center gap-1">
+                        <i class="fa-solid fa-location-dot text-amber-600 dark:text-amber-400"></i>
+                        <span>Yangon</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i class="fa-solid fa-phone text-amber-600 dark:text-amber-400"></i>
+                        <span class="font-bold text-slate-900 dark:text-white">+959 5554440</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-[420px] lg:w-[480px] relative group">
+            <div class="relative flex items-center">
+                <input type="text" id="searchInput" name="search" placeholder="Search equipment, solutions, supplies..." class="w-full glass-input focus:bg-white/90 dark:focus:bg-slate-900/90 focus:border-amber-500/80 rounded-full py-2.5 pl-11 pr-24 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 shadow-inner focus:shadow-md focus:ring-4 focus:ring-amber-500/10 transition-all duration-300 outline-none">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 text-slate-400 group-focus-within:text-amber-600 dark:group-focus-within:text-amber-400 transition-colors text-xs"></i>
+                <button type="button" id="searchBtn" aria-label="Search" class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-1.5 rounded-full font-semibold text-[11px] transition-all shadow-sm active:scale-95 flex items-center gap-1">
+                    Search
+                </button>
+            </div>
+        </div>
+
+            <div class="hidden md:flex items-center gap-5 text-slate-600 dark:text-slate-300 font-medium text-[11px]">
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot text-amber-600 dark:text-amber-400"></i>
+                    <span>Kamayut, Yangon</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-phone text-amber-600 dark:text-amber-400"></i>
+                    <span class="font-bold text-slate-900 dark:text-white">+959 5554440</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 glass-panel border-t border-white/40 dark:border-slate-800/40 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a id="scroll-logo" href="#" class="flex items-center gap-2 opacity-0 -translate-x-3 pointer-events-none transition-all duration-300 ease-out">
+                <img class="h-12 sm:h-15 md:h-13 w-auto object-contain" src="images/GMA-logo-removebg-preview.png" alt="GMA Logo">
+                <div class="flex flex-col justify-center border-l border-slate-300/60 dark:border-slate-700/60 pl-2">
+                    <span class="font-extrabold text-slate-900 dark:text-white tracking-wider block leading-none text-sm">GMA</span>
+                    <span class="text-[8px] text-amber-600 dark:text-amber-400 font-bold tracking-tight uppercase block mt-0.5">Golden Myanmar Alliance</span>
+                </div>
+            </a>
+
+            <!-- <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                <a href="#" class="nav-link relative py-4 text-amber-600 dark:text-amber-400 font-bold" data-target="home">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+                <a href="#services" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="services">
+                    Services
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+                <a href="#clients" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="clients">
+                    For Clients <i class="fa-solid fa-chevron-down text-[9px] ml-0.5"></i>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+                <a href="#about" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="about">
+                    About Company
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+                <a href="#contact" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="contact">
+                    Contacts
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+            </nav> -->
+            <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                <a href="#" class="nav-link relative py-4 text-amber-600 dark:text-amber-400 font-bold" data-target="home">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+
+                <a href="#services" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="services">
+                    Services
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+
+                <!-- For Clients with Dropdown -->
+                <div class="relative group">
+                <a href="" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-1" data-target="clients">
+                    For Clients <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-hover:rotate-180"></i>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+
+                <!-- Dropdown Box (New Page Links) -->
+                <div class="absolute top-full left-0 w-56 bg-white/90 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 border border-slate-200/80 dark:border-slate-800 z-[99] normal-case">
+                    <div class="flex flex-col space-y-1 text-xs font-medium">
+                        <a href="client.html?tender" class="px-3 py-2 rounded-xl hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400 text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-file-lines text-amber-500"></i> Tender Documents
+                        </a>
+                        <a href="client.html?warranty" class="px-3 py-2 rounded-xl hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400 text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-amber-500"></i> Warranty & Service
+                        </a>
+                        <a href="client.html?casestudy" class="px-3 py-2 rounded-xl hover:bg-amber-500/10 hover:text-amber-600 dark:hover:text-amber-400 text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-briefcase text-amber-500"></i> Project Case Studies
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+                <!-- About Company -->
+                <a href="#about" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="about">
+                    About Company
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+
+                <!-- Contacts -->
+                <a href="#contact" class="nav-link relative py-4 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" data-target="contact">
+                    Contacts
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 rounded-full transition-all duration-300"></span>
+                </a>
+            </nav>
+
+            <div class="flex items-center gap-3 ml-auto lg:ml-0">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-2 w-9 h-9 rounded-full glass-card hover:bg-white/80 dark:hover:bg-slate-800/80 text-slate-600 dark:text-amber-400 transition-all duration-300 flex items-center justify-center shadow-sm">
+                    <i id="theme-icon" class="fa-regular fa-lightbulb text-sm"></i>
+                </button>
+
+                <div class="hidden sm:flex items-center">
+                    <a href="products.html" class="px-5 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold text-xs transition-all shadow-md shadow-amber-500/20">
+                        See Our Products
+                    </a>
+                </div>
+
+                <button id="menu-btn" aria-label="Toggle Navigation Menu" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] glass-panel z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-6">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/50">
+                <a href="#" class="flex items-center gap-2.5">
+                    <img class="h-12 w-auto object-contain" src="images/GMA-logo-removebg-preview.png" alt="GMA Logo">
+                    <div class="flex flex-col justify-center border-l border-slate-300/60 dark:border-slate-700/60 pl-2.5">
+                        <span class="font-extrabold text-slate-900 dark:text-white tracking-wider block leading-none text-sm">GMA</span>
+                        <span class="text-[8px] text-amber-600 dark:text-amber-400 font-bold tracking-tight uppercase block mt-0.5">Golden Myanmar Alliance</span>
+                    </div>
+                </a>
+                <button id="close-drawer" aria-label="Close Navigation Menu" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-4 py-6 font-semibold text-sm text-slate-700 dark:text-slate-200">
+                <a href="#" class="text-amber-600 dark:text-amber-400">Home</a>
+                
+                <a href="#services" class="hover:text-amber-600 dark:hover:text-amber-400">Services</a>
+                
+                <details class="group/mobile">
+                    <summary class="flex items-center justify-between cursor-pointer list-none text-amber-600 dark:text-amber-400 select-none">
+                        <span class="flex items-center gap-1">
+                            For Clients
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-300 group-open/mobile:rotate-180"></i>
+                    </summary>
+
+                    <div class="flex flex-col pl-4 mt-3 space-y-2 text-xs font-medium border-l-2 border-amber-500/30">
+                        <a href="client.html?tender" class="py-1.5 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-file-lines text-amber-500"></i> Tender Documents
+                        </a>
+                        <a href="client.html?warranty" class="py-1.5 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-amber-500"></i> Warranty & Service
+                        </a>
+                        <a href="client.html?casestudy" class="py-1.5 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-briefcase text-amber-500"></i> Project Case Studies
+                        </a>
+                    </div>
+                </details>
+
+                <a href="#about" class="hover:text-amber-600 dark:hover:text-amber-400">About Company</a>
+                <a href="#contact" class="hover:text-amber-600 dark:hover:text-amber-400">Contacts</a>
+            </nav>
+        </div>
+        <a href="products.html" class="w-full text-center py-3 rounded-full bg-amber-500 text-white font-semibold text-xs shadow-md">
+            See Our Products
+        </a>
+    </div>
+
+    <section class="pt-8 pb-10 hero-section relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden transition-colors duration-300 gsap-reveal">
+                
+                <div id="layout-medical" class="grid lg:grid-cols-12 gap-8 items-center relative z-10 transition-all duration-500 ease-in-out">
+                    <div class="lg:col-span-7 space-y-6 hero-text">
+                        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 glass-card px-3 py-1 rounded-full">Medical Division</span>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
+                            Comprehensive Supply of <span class="text-amber-600 dark:text-amber-400">Medical Equipment</span> & ICU Units
+                        </h1>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl font-normal">
+                            We carry out full equipment of medical institutions from engineering design ideas to equipment installation, staff training, and official warranty support across Myanmar.
+                        </p>
+                        <div class="pt-2">
+                            <a href="#contact" class="px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/25 inline-flex items-center gap-2">
+                                Get Consultation <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex justify-center hero-image">
+                        <div class="relative w-full max-w-md group overflow-hidden rounded-3xl shadow-2xl border-2 border-amber-400/30 shadow-[0_10px_30px_rgba(217,119,6,0.12)]">
+                            <div id="hero-slider" class="flex transition-transform duration-500 ease-out h-72 sm:h-80">
+                                <div class="w-full bg-white flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/med/gmsj13267 æ·è´.jpg" alt="ICU Operation Room" class="w-auto h-full object-cover">
+                                    
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">ICU & Surgical Suites</span>
+                                </div>
+                                <div class="w-full bg-white flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/med/gmsj17690.png" alt="Diagnostic Equipment" class="w-auto h-full object-cover">
+                                    
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Advanced Medical Monitors</span>
+                                </div>
+                                <div class="w-full bg-white flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/med/gmsj17726.png" alt="Laboratory Systems" class="w-auto h-full object-cover">
+                                    
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Diagnostic & Lab Devices</span>
+                                </div>
+                                <div class="w-full bg-white flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/med/Img25021.png" alt="Hospital Machinery" class="w-auto h-full object-cover">
+                                    
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Radiology & Scanning Tech</span>
+                                </div>
+                                <div class="w-full bg-white flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/med/P40Elite.png" alt="Emergency Medical Setup" class="w-‌auto h-full object-cover">
+                                  
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Emergency Care Units</span>
+                                </div>
+                            </div>
+
+                            <button id="prev-slide" aria-label="Previous Slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-card hover:bg-white text-slate-800 dark:text-white flex items-center justify-center shadow-md transition-all duration-200 active:scale-90 opacity-80 hover:opacity-100 focus:outline-none">
+                                <i class="fa-solid fa-chevron-left text-xs"></i>
+                            </button>
+                            <button id="next-slide" aria-label="Next Slide" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-card hover:bg-white text-slate-800 dark:text-white flex items-center justify-center shadow-md transition-all duration-200 active:scale-90 opacity-80 hover:opacity-100 focus:outline-none">
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 right-4 flex items-center gap-1.5 z-10">
+                                <span class="dot-indicator w-2 h-2 rounded-full bg-white transition-all duration-300"></span>
+                                <span class="dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="layout-petro" class="hidden grid lg:grid-cols-12 gap-8 items-center relative z-10 transition-all duration-500 ease-in-out opacity-0">
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 glass-card px-3 py-1 rounded-full">Energy & Petro Division</span>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
+                            Reliable Supply of <span class="text-amber-600 dark:text-amber-400">Petroleum Products</span> & Fuel Logistics
+                        </h1>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl font-normal">
+                            Delivering high-grade petroleum, industrial lubricants, fuel distribution systems, and full bulk energy logistics with international standards across Myanmar.
+                        </p>
+                        <!-- <div class="pt-2 flex flex-col sm:flex-row items-center gap-4">
+                            
+                            <a href="#contact" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/40 hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group">
+                                Request Petro Quote 
+                                <i class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1"></i>
+                            </a>
+
+                            <a href="#services" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-800 dark:text-white border border-slate-300 dark:border-slate-700 font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group">
+                                Explore Services
+                                <i class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1"></i>
+                            </a>
+                        </div> -->
+
+                        <div class="pt-2 flex flex-col sm:flex-row items-center gap-4">
+                            <!-- Company A Website Link -->
+                            <a href="https://company-a.com" rel="noopener noreferrer" 
+                            class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/40 hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group">
+                                Visit [Company A Name]
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                            </a>
+
+                            <!-- Company B Website Link -->
+                            <a href="https://company-b.com" rel="noopener noreferrer" 
+                            class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-slate-900/20 hover:shadow-xl hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group">
+                                Visit [Company B Name]
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-full max-w-md group overflow-hidden rounded-3xl shadow-2xl border-2 border-amber-400/30 shadow-[0_10px_30px_rgba(217,119,6,0.12)]">
+                            <div id="petro-slider" class="flex transition-transform duration-500 ease-out h-72 sm:h-80">
+                                <div class="w-full flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/pet/gear.jpg" alt="Oil Refinery Operations" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Refinery & Processing</span>
+                                </div>
+                                <div class="w-full flex items-center justify-center flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/pet/g-lion-1.png" alt="Fuel Tanker Transport" class="w-auto h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Bulk Fuel Logistics</span>
+                                </div>
+                                <div class="w-full flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/pet/engine.jpg" alt="Offshore Rig Station" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Offshore Energy Projects</span>
+                                </div>
+                                <div class="w-full flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/pet/company.png" alt="Industrial Storage Tanks" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Industrial Fuel Storage</span>
+                                </div>
+                                <div class="w-full flex-shrink-0 h-full relative">
+                                    <img src="images/slide_show_images/pet/all.png" alt="Energy Pipeline Grid" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-3 left-4 text-[10px] font-medium text-white/90 glass-card px-3 py-1 rounded-full">Pipeline Distribution</span>
+                                </div>
+                            </div>
+
+                            <button id="petro-prev-slide" aria-label="Previous Slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-card hover:bg-white text-slate-800 dark:text-white flex items-center justify-center shadow-md transition-all duration-200 active:scale-90 opacity-80 hover:opacity-100 focus:outline-none">
+                                <i class="fa-solid fa-chevron-left text-xs"></i>
+                            </button>
+                            <button id="petro-next-slide" aria-label="Next Slide" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-card hover:bg-white text-slate-800 dark:text-white flex items-center justify-center shadow-md transition-all duration-200 active:scale-90 opacity-80 hover:opacity-100 focus:outline-none">
+                                <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </button>
+
+                            <div class="absolute bottom-3 right-4 flex items-center gap-1.5 z-10">
+                                <span class="petro-dot-indicator w-2 h-2 rounded-full bg-white transition-all duration-300"></span>
+                                <span class="petro-dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="petro-dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="petro-dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                                <span class="petro-dot-indicator w-2 h-2 rounded-full bg-white/50 transition-all duration-300"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-6 flex items-center justify-center gsap-reveal">
+                <div class="glass-panel p-1.5 rounded-full inline-flex items-center gap-2 shadow-lg border border-white/60 dark:border-slate-800/80">
+                    <button id="tab-medical" class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-stethoscope text-xs"></i> Medical Division
+                    </button>
+                    <button id="tab-petro" class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-gas-pump text-xs"></i> Energy & Petro Division
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about" class="py-12 transition-colors duration-300 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/60 dark:border-slate-800/80 shadow border border-slate-200/50 dark:border-slate-800/50 relative overflow-hidden gsap-reveal">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-3xl mb-8 space-y-3">
+                    <span class="text-amber-600 dark:text-amber-400 font-bold text-xs uppercase tracking-widest block">
+                        About Golden Myanmar Alliance
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
+                        Connecting & Growing Together With Myanmar
+                    </h2>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+                    <div class="lg:col-span-7 flex flex-col justify-between space-y-6 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed text-justify tracking-wide">
+                        <p>
+                            <strong class="text-slate-900 dark:text-white font-semibold">Golden Myanmar Alliance (GMA)</strong> registered as an independent entity in March 2016 under the Ministry of National Planning and Economic Development of the Republic of the Union of Myanmar.
+                        </p>
+                        <p>
+                            Focusing on medical products and hospital utilities trading, GMA achieved major milestones across government hospital tenders within its first operating year.
+                        </p>
+                        <p>
+                            In 2017, to expand countrywide commercial distribution and broaden its industrial expertise, GMA merged with <strong class="text-slate-900 dark:text-white font-semibold">Myanmar Paradigm Group (MPG)</strong>. Today, MPG comprises four main divisions: Trading, Distribution, Government Projects, and Services.
+                        </p>
+
+                        <div class="pt-2 flex flex-wrap gap-3">
+                            <span class="glass-card px-3 py-1.5 rounded-xl border border-white/80 dark:border-slate-700/60 text-amber-600 dark:text-amber-400 font-bold text-[11px] inline-flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check"></i> Est. March 2016
+                            </span>
+                            <span class="glass-card px-3 py-1.5 rounded-xl border border-white/80 dark:border-slate-700/60 text-amber-600 dark:text-amber-400 font-bold text-[11px] inline-flex items-center gap-2">
+                                <i class="fa-solid fa-handshake"></i> MPG Group Merger (2017)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 grid grid-cols-2 gap-4 stat-cards">
+                        <div class="glass-card p-5 rounded-2xl text-center flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:scale-[1.02] transition-transform">
+                            <span class="text-3xl font-black text-amber-500 mb-1 tracking-tight">2016</span>
+                            <span class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">Entity Registration</span>
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl text-center flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:scale-[1.02] transition-transform">
+                            <span class="text-3xl font-black text-amber-500 mb-1 tracking-tight">GMA</span>
+                            <span class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">Group Of Company</span>
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl text-center flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:scale-[1.02] transition-transform">
+                            <i class="fa-solid fa-hospital-user text-2xl text-amber-500 mb-2"></i>
+                            <span class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">Public Tenders</span>
+                        </div>
+                        <div class="glass-card p-5 rounded-2xl text-center flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:scale-[1.02] transition-transform">
+                            <i class="fa-solid fa-network-wired text-2xl text-amber-500 mb-2"></i>
+                            <span class="text-[10px] uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">Nationwide Network</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-panel p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300 gsap-reveal">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Our Vision</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed text-justify tracking-wide">
+                        To be a leading Pharmaceutical, Medical Equipment, and Consumer Goods distribution company that connects and grows together with Myanmar.
+                        
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300 gsap-reveal">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider">Our Mission</h3>
+                    </div>
+                    <ul class="space-y-3 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed text-justify tracking-wide">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-amber-500 text-xs mt-1 shrink-0"></i>
+                            <span>Provide highest quality services and products by building long-term customer relationships and addressing potential clients effectively.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-amber-500 text-xs mt-1 shrink-0"></i>
+                            <span>Provide a happy, stable, and safe working environment for our employees.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-amber-500 text-xs mt-1 shrink-0"></i>
+                            <span>Create value through quality products, excellent services, and strong financial results via strategic networking.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="services" class="space-y-6">
+                <div class="text-center max-w-xl mx-auto gsap-reveal">
+                    <span class="text-amber-600 dark:text-amber-400 font-bold text-xs uppercase tracking-widest block mb-1">Capabilities & Expertise</span>
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Our Core Services</h3>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 service-cards">
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:border-amber-500/50 hover:shadow-md transition-all duration-300 flex flex-col justify-between gsap-card">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-5">
+                                <i class="fa-solid fa-pills"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Pharmaceuticals & Disposables</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed text-justify tracking-wide">
+                                Complete solution for FDA registration, Importation, Warehousing, Sales, and Distribution of Pharmaceuticals & Surgical Disposables. Multi-channel network covering dealers, wholesalers, retail pharmacies, hospitals, clinics, and modern trade through Structure, Outright, and OTC models.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-slate-200/50 dark:border-slate-700/50 mt-6">
+                            <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Multi-Channel Distribution</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:border-amber-500/50 hover:shadow-md transition-all duration-300 flex flex-col justify-between gsap-card">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-5">
+                                <i class="fa-solid fa-microscope"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Medical Equipment</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed text-justify tracking-wide">
+                                Supply of medical equipment to private and public hospital projects. Backed by a strong technical team providing after-sales maintenance, technical support, and full one-stop solution setups for new hospitals and clinic projects.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-slate-200/50 dark:border-slate-700/50 mt-6">
+                            <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">One-Stop Solution Provider</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 sm:p-8 rounded-3xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:border-amber-500/50 hover:shadow-md transition-all duration-300 flex flex-col justify-between gsap-card">
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-5">
+                                <i class="fa-solid fa-plane-departure"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Medical Tourism</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed text-justify tracking-wide">
+                                Direct patient referral and coordination services for Piyavate Hospital in Bangkok, Thailand, ensuring seamless medical care, consultation booking, and cross-border healthcare assistance.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-slate-200/50 dark:border-slate-700/50 mt-6">
+                            <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Piyavate Hospital Partner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-12 transition-colors duration-300 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-10 gsap-reveal">
+                <span class="text-amber-600 dark:text-amber-400 font-bold text-xs uppercase tracking-widest block mb-1">GMA Group Network</span>
+                <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white uppercase">Our Associate Companies</h2>
+            </div>
+
+            <!-- Flex container with justify-center to center the last remaining items automatically -->
+            <div class="flex flex-wrap justify-center gap-4 partner-logos">
+                <!-- 1. GMA Healthcare -->
+                <a href="https://healthcare.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/GMA-logo-removebg-preview.png" alt="GMA Healthcare" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 2. GMA Pharma -->
+                <a href="https://pharma.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/Ayar_Med.png" alt="GMA Pharma" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 3. GMA Diagnostics -->
+                <a href="https://diagnostics.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/GMA_International_Trading_Group.png" alt="GMA Diagnostics" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 4. GMA MedLogistics -->
+                <a href="https://medlogistics.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/Golden_Myanmar_Alliance_New.png" alt="GMA MedLogistics" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 5. GMA Engineering -->
+                <a href="https://engineering.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/GMA_NEW_LOGO.png" alt="GMA Engineering" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 6. GMA MedTech -->
+                <a href="https://medtech.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/GMA_Group_of_Companies.png" alt="GMA MedTech" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 7. Pharma Crystal City -->
+                <a href="https://medtech.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/PHARMA_CRYSTAL_CITY.png" alt="Pharma Crystal City" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 8. Max Care -->
+                <a href="https://medtech.gma-myanmar.com" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/Max_Care.png" alt="Max Care" class="max-h-20 sm:max-h-20 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 9. Extra Pharma Crystal City -->
+                <a href="https://www.gmlubricants.com/" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/gm+.png" alt="GM +" class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+
+                <!-- 10. Extra Max Care -->
+                <a href="https://www.glionlubricants.com/" target="_blank" class="glass-card rounded-2xl h-36 sm:h-44 p-4 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out flex items-center justify-center group gsap-card w-[calc(50%-8px)] sm:w-[calc(25%-12px)] lg:w-[calc(12.5%-14px)]">
+                    <img src="images/sub/g-lion.png" alt="Max Care" class="max-h-20 sm:max-h-20 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-110">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 transition-colors duration-300 relative overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2 gsap-reveal">
+                <span class="text-amber-600 dark:text-amber-400 font-bold text-xs uppercase tracking-widest block">Get In Touch</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Contact Our Team</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm">Have questions or need a custom quotation? Reach out to us via any channel below.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                
+                <div class="lg:col-span-5 space-y-6 gsap-reveal">
+                    
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/60 dark:border-slate-800/80 shadow-md space-y-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wide border-b border-slate-200/60 dark:border-slate-800/60 pb-3">Reach Us Directly</h3>
+                        
+                        <div class="space-y-4 text-xs sm:text-sm">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 text-base">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Head Office Address</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">Hnin Si Street, Yuzana Highway Complex, Kamayut Township, Yangon, Myanmar.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 text-base">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Phone Lines</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 mt-1 font-semibold">+959 5554440, +959 420213780</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 text-base">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Official Email</h4>
+                                    <p class="text-slate-600 dark:text-slate-300 mt-1">kyiswetin@gma-myanmar.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
+                            <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-3">Connect With Us</h4>
+                            <div class="flex items-center gap-3">
+                                <a href="#" target="_blank" aria-label="Facebook" class="w-10 h-10 rounded-2xl glass-card hover:bg-blue-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm">
+                                    <i class="fa-brands fa-facebook-f text-base"></i>
+                                </a>
+                                <a href="#" target="_blank" aria-label="Viber" class="w-10 h-10 rounded-2xl glass-card hover:bg-purple-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm">
+                                    <i class="fa-brands fa-viber text-base"></i>
+                                </a>
+                                <a href="https://t.me" target="_blank" aria-label="Telegram" class="w-10 h-10 rounded-2xl glass-card hover:bg-sky-500 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm">
+                                    <i class="fa-brands fa-telegram text-base"></i>
+                                </a>
+                                <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="w-10 h-10 rounded-2xl glass-card hover:bg-gradient-to-tr hover:from-amber-500 hover:to-pink-600 hover:text-white text-slate-600 dark:text-slate-300 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm">
+                                    <i class="fa-brands fa-instagram text-base"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-2 rounded-3xl border border-white/60 dark:border-slate-800/80 shadow-md overflow-hidden h-56 relative group">
+                        <iframe 
+                            class="w-full h-full rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3819.3871271131704!2d96.1287!3d16.8324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c194b9f29bfbfd%3A0x6a21356f10c0e588!2sKamayut%20Township%2C%20Yangon!5e0!3m2!1sen!2smm!4v1700000000000!5m2!1sen!2smm" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                </div>
+
+                <div class="lg:col-span-7 gsap-reveal">
+                    <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-white/60 dark:border-slate-800/80 shadow-md space-y-6">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wide border-b border-slate-200/60 dark:border-slate-800/60 pb-3">Send Us A Message</h3>
+
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Your Name</label>
+                                    <input type="text" name="name" placeholder="John Doe" required class="w-full glass-input rounded-2xl py-3 px-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Your Email</label>
+                                    <input type="email" name="email" placeholder="john@example.com" required class="w-full glass-input rounded-2xl py-3 px-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all">
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Phone Number</label>
+                                    <input type="tel" name="phone" placeholder="+959..." class="w-full glass-input rounded-2xl py-3 px-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Subject</label>
+                                    <input type="text" name="subject" placeholder="Inquiry about..." class="w-full glass-input rounded-2xl py-3 px-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Message</label>
+                                <textarea name="message" rows="4" placeholder="Write your details or specifications here..." required class="w-full glass-input rounded-2xl py-3 px-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-500/25 active:scale-95 flex items-center justify-center gap-2">
+                                Send Message <i class="fa-solid fa-paper-plane text-xs"></i>
+                            </button>
+                        </form>
+
+                        <div id="form-status" class="hidden p-4 rounded-2xl text-xs font-medium flex items-center gap-3 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-slate-900/90 dark:bg-slate-950/95 backdrop-blur-md text-slate-400 pt-16 pb-8 text-xs border-t border-slate-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
+                <div class="space-y-3">
+                    <a href="index.html" class="flex items-center gap-2.5">
+                        <img class="h-12 w-auto object-contain" src="images/GMA-logo-removebg-preview.png" alt="GMA Logo">
+                        <div class="flex flex-col justify-center border-l border-slate-700 pl-2.5">
+                            <span class="font-extrabold text-white tracking-wider block leading-none text-xs">GOLDEN MYANMAR ALLIANCE</span>
+                            <span class="text-[8px] text-amber-500 font-semibold tracking-tight uppercase block mt-0.5">Healthcare & Industrial</span>
+                        </div>
+                    </a>
+                    <p class="text-slate-400 leading-relaxed pt-1">
+                        Supplying medical equipment, disposables, and healthcare solutions in Myanmar since 2015.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase mb-3">Head Office Head</h4>
+                    <p class="text-slate-400 leading-relaxed">
+                        Hnin Si Street, Yuzana Highway Complex, Kamayut Township, Yangon, Myanmar.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase mb-3">Contacts</h4>
+                    <p class="text-amber-500 font-bold text-sm mb-1">+959 5554440, +959 420213780</p>
+                    <p class="text-slate-400">kyiswetin@gma-myanmar.com</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase mb-3">Working Hours</h4>
+                    <p class="text-slate-400">Monday - Saturday</p>
+                    <p class="text-slate-200 font-semibold">9:00 AM - 5:00 PM</p>
+                </div>
+            </div>
+            <div class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-slate-500">
+                <p>&copy; 2026 Golden Myanmar Alliance. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-300">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" aria-label="Back to top" class="fixed bottom-6 right-6 z-20 w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xl shadow-amber-500/30 flex items-center justify-center opacity-0 translate-y-10 pointer-events-none transition-all duration-300 hover:scale-110 active:scale-95 group focus:outline-none pulse-ring-effect">
+        <i class="fa-solid fa-arrow-up text-base transition-transform duration-300 group-hover:-translate-y-1"></i>
+    </button>
+
+    <!-- company start -->
+    <!-- Company Showcase Modal Panel -->
+    <div id="company-modal" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl overflow-hidden border border-white/60 dark:border-slate-700/60 shadow-2xl transform scale-95 transition-transform duration-300 relative" id="modal-card">
+            
+            <button id="close-company-modal" class="absolute top-4 right-4 w-9 h-9 rounded-full glass-card hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center z-20 transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="grid md:grid-cols-12">
+                <div class="md:col-span-5 relative h-48 md:h-auto overflow-hidden">
+                    <img id="modal-img" src="" alt="Company Showcase" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent md:hidden"></div>
+                </div>
+
+                <div class="md:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                    <div>
+                        <span id="modal-badge" class="inline-block text-[10px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 glass-card px-3 py-1 rounded-full mb-3">
+                            Division
+                        </span>
+                        <h3 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-tight">
+                            Company Name
+                        </h3>
+                        <h4 id="modal-subtitle" class="text-xs font-semibold text-amber-600 dark:text-amber-400 mt-1">
+                            Company Subtitle
+                        </h4>
+                        <p id="modal-desc" class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
+                            Description
+                        </p>
+                        
+                        <!-- Approved / Verified Feature List -->
+                        <ul class="mt-4 space-y-2.5">
+                            <li class="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                                <span class="w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-circle-check text-sm"></i>
+                                </span>
+                                <span>Clean and modern architecture</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                                <span class="w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-circle-check text-sm"></i>
+                                </span>
+                                <span>Eco friendly materials</span>
+                            </li>
+                            <li class="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                                <span class="w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-circle-check text-sm"></i>
+                                </span>
+                                <span>Idea to final solution</span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
+                        <a id="modal-link" href="#" rel="noopener noreferrer" class="w-full text-center px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/25 transition-all flex items-center justify-center gap-2">
+                            Visit Official Website <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Click & Data Handling Logic -->
+    <script>
+        window.onload = async () => {
+            const response = await fetch('../index.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'insert_record'})
+            });
+
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+    <script>
+        const companyData = {
+            healthcare: {
+                title: "GMA",
+                subtitle: "PROJECT DESCRIPTION",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test1.html",
+                badge: "Medical Division"
+            },
+            pharma: {
+                title: "Ayar Med",
+                subtitle: "Import & Wholesale Distribution",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test2.html",
+                badge: "Pharma Division"
+            },
+            diagnostics: {
+                title: "Company Name",
+                subtitle: "Clinical & Laboratory Devices",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test3.html",
+                badge: "Diagnostics Division"
+            },
+            medlogistics: {
+                title: "Company Name",
+                subtitle: "Cold-Chain Healthcare Logistics",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test4.html",
+                badge: "Logistics Division"
+            },
+            engineering: {
+                title: "Company Name",
+                subtitle: "Complex Hospital Fitting Solutions",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test5.html",
+                badge: "Engineering Division"
+            },
+            medtech: {
+                title: "Company Name",
+                subtitle: "Digital Health & Telemedicine Solutions",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test6.html",
+                badge: "MedTech Division"
+            },
+            engineering1: {
+                title: "PHARMA CRYSTAL CITY",
+                subtitle: "Complex Hospital Fitting Solutions",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test7.html",
+                badge: "Engineering Division"
+            },
+            medtech1: {
+                title: "Max Care Myanmar",
+                subtitle: "Digital Health & Telemedicine Solutions",
+                description: "We focus on high-quality products to support Myanmar healthcare as one-stop service providers relating to medical equipment and machines for hospitals. Since 2016, we have been providing machines, technology & service for public and private markets. We are very honored to represent global brands that have a virtuous reputation over the world. We provide the Saturn 8000 NMI DR Full Installation Service For Malikha Clinic ( Thingangyun ), Yangon.",
+                image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+                url: "./sub/test8.html",
+                badge: "MedTech Division"
+            }
+        };
+
+        const companyModal = document.getElementById('company-modal');
+        const modalCard = document.getElementById('modal-card');
+        const closeModalBtn = document.getElementById('close-company-modal');
+
+        const modalImg = document.getElementById('modal-img');
+        const modalBadge = document.getElementById('modal-badge');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSubtitle = document.getElementById('modal-subtitle');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalLink = document.getElementById('modal-link');
+
+        document.querySelectorAll('.partner-logos a').forEach((element, index) => {
+            const keys = ['healthcare', 'pharma', 'diagnostics', 'medlogistics', 'engineering', 'medtech', 'engineering1', 'medtech1'];
+            const key = keys[index % keys.length];
+
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const data = companyData[key];
+
+                if (data) {
+                    modalImg.src = data.image;
+                    modalBadge.textContent = data.badge;
+                    modalTitle.textContent = data.title;
+                    modalSubtitle.textContent = data.subtitle;
+                    modalDesc.textContent = data.description;
+                    modalLink.href = data.url;
+
+                    companyModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        companyModal.classList.remove('opacity-0');
+                        modalCard.classList.remove('scale-95');
+                        modalCard.classList.add('scale-100');
+                    }, 10);
+                    document.body.classList.add('overflow-hidden');
+                }
+            });
+        });
+
+        function closeCompanyModal() {
+            companyModal.classList.add('opacity-0');
+            modalCard.classList.remove('scale-100');
+            modalCard.classList.add('scale-95');
+            setTimeout(() => {
+                companyModal.classList.add('hidden');
+            }, 300);
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        closeModalBtn.addEventListener('click', closeCompanyModal);
+        companyModal.addEventListener('click', (e) => {
+            if (e.target === companyModal) closeCompanyModal();
+        });
+    </script>
+</body>
+    <!-- compay end -->
+
+    <script>
+        // Interactive Canvas Background Logic (Supports Light & Dark mode seamlessly)
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        
+        const config = {
+            particleCount: 75,
+            maxDistance: 130,
+            mouseRadius: 160
+        };
+
+        const mouse = {
+            x: null,
+            y: null
+        };
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1.2;
+                this.vy = (Math.random() - 0.5) * 1.2;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.hypot(dx, dy);
+
+                    if (dist < config.mouseRadius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (config.mouseRadius - dist) / config.mouseRadius;
+                        this.x -= Math.cos(angle) * force * 3;
+                        this.y -= Math.sin(angle) * force * 3;
+                    }
+                }
+            }
+
+            draw(isDark) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.7)' : 'rgba(217, 119, 6, 0.6)';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            resizeCanvas();
+            particles = [];
+            for (let i = 0; i < config.particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles(isDark) {
+            const lineRGB = isDark ? '245, 158, 11' : '217, 119, 6';
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.hypot(dx, dy);
+
+                    if (dist < config.maxDistance) {
+                        const opacity = 1 - (dist / config.maxDistance);
+                        ctx.strokeStyle = `rgba(${lineRGB}, ${opacity * 0.25})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            const isDark = document.documentElement.classList.contains('dark');
+
+            particles.forEach(p => {
+                p.update();
+                p.draw(isDark);
+            });
+
+            connectParticles(isDark);
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        initParticles();
+        animateParticles();
+
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            smoothWave: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // GSAP ScrollTrigger Registration
+        gsap.registerPlugin(ScrollTrigger);
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        // Initialize GSAP Scroll Animations
+        window.addEventListener('load', () => {
+            // Hero Animation
+            gsap.from(".hero-text", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            gsap.from(".hero-image", {
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.4
+            });
+
+            // Reveal sections on scroll
+            gsap.utils.toArray('.gsap-reveal').forEach((element) => {
+                gsap.to(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            });
+
+            // Service Cards Stagger
+            gsap.to(".service-cards .gsap-card", {
+                scrollTrigger: {
+                    trigger: ".service-cards",
+                    start: "top 80%"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            // Partner Logos Stagger
+            gsap.to(".partner-logos .gsap-card", {
+                scrollTrigger: {
+                    trigger: ".partner-logos",
+                    start: "top 85%"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.08,
+                ease: "back.out(1.7)"
+            });
+
+            // About Stat Cards Stagger Animation
+            gsap.from(".stat-cards > div", {
+                scrollTrigger: {
+                    trigger: ".stat-cards",
+                    start: "top 80%"
+                },
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.15,
+                ease: "back.out(1.5)"
+            });
+        });
+
+        // Dark/Light Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        function updateThemeIcon() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.className = 'fa-solid fa-lightbulb text-sm';
+            } else {
+                themeIcon.className = 'fa-regular fa-lightbulb text-sm';
+            }
+        }
+
+        updateThemeIcon();
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        });
+
+        // Nav Active Underline
+
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                const underline = link.querySelector('span');
+                underline.classList.remove('w-0');
+                underline.classList.add('w-full');
+            });
+
+            link.addEventListener('mouseleave', () => {
+                if (!link.classList.contains('active-nav')) {
+                    const underline = link.querySelector('span');
+                    underline.classList.remove('w-full');
+                    underline.classList.add('w-0');
+                }
+            });
+
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(item => {
+                    item.classList.remove('text-amber-600', 'dark:text-amber-400', 'font-bold', 'active-nav');
+                    item.classList.add('hover:text-amber-600');
+                    const span = item.querySelector('span');
+                    span.classList.remove('w-full');
+                    span.classList.add('w-0');
+                });
+
+                link.classList.add('text-amber-600', 'dark:text-amber-400', 'font-bold', 'active-nav');
+                link.classList.remove('hover:text-amber-600');
+                const activeSpan = link.querySelector('span');
+                activeSpan.classList.remove('w-0');
+                activeSpan.classList.add('w-full');
+            });
+        });
+
+        // Mobile Drawer
+        const menuBtn = document.getElementById('menu-btn');
+        const closeDrawerBtn = document.getElementById('close-drawer');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        function openDrawer() {
+            mobileOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mobileOverlay.classList.remove('opacity-0');
+                mobileDrawer.classList.remove('translate-x-full');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeDrawer() {
+            mobileDrawer.classList.add('translate-x-full');
+            mobileOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                mobileOverlay.classList.add('hidden');
+            }, 300);
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        menuBtn.addEventListener('click', openDrawer);
+        closeDrawerBtn.addEventListener('click', closeDrawer);
+        mobileOverlay.addEventListener('click', closeDrawer);
+
+        const mobileLinks = mobileDrawer.querySelectorAll('a, button');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeDrawer);
+        })
+
+        // Header Scroll Effect & Back-to-Top Button Visibility
+        const scrollLogo = document.getElementById('scroll-logo');
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                scrollLogo.classList.remove('opacity-0', '-translate-x-3', 'pointer-events-none');
+                scrollLogo.classList.add('opacity-100', 'translate-x-0');
+            } else {
+                scrollLogo.classList.remove('opacity-100', 'translate-x-0');
+                scrollLogo.classList.add('opacity-0', '-translate-x-3', 'pointer-events-none');
+            }
+
+            // Show/Hide Top Button after 300px scroll
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }
+        });
+
+        // Smooth Scroll to Top with Lenis
+        backToTopBtn.addEventListener('click', () => {
+            lenis.scrollTo(0, { duration: 1.2 });
+        });
+
+        // Hero Layout Switcher Logic
+        const layoutMedical = document.getElementById('layout-medical');
+        const layoutPetro = document.getElementById('layout-petro');
+        const tabMedical = document.getElementById('tab-medical');
+        const tabPetro = document.getElementById('tab-petro');
+
+        function showMedical() {
+            layoutPetro.classList.add('opacity-0');
+            setTimeout(() => {
+                layoutPetro.classList.add('hidden');
+                layoutMedical.classList.remove('hidden');
+                setTimeout(() => layoutMedical.classList.remove('opacity-0'), 10);
+            }, 200);
+
+            tabMedical.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md flex items-center gap-2';
+            tabPetro.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 flex items-center gap-2';
+        }
+
+        function showPetro() {
+            layoutMedical.classList.add('opacity-0');
+            setTimeout(() => {
+                layoutMedical.classList.add('hidden');
+                layoutPetro.classList.remove('hidden');
+                setTimeout(() => layoutPetro.classList.remove('opacity-0'), 10);
+            }, 200);
+
+            tabPetro.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md flex items-center gap-2';
+            tabMedical.className = 'px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 flex items-center gap-2';
+        }
+
+        tabMedical.addEventListener('click', showMedical);
+        tabPetro.addEventListener('click', showPetro);
+
+        // Medical Hero Image Slideshow
+        const heroSlider = document.getElementById('hero-slider');
+        const prevBtn = document.getElementById('prev-slide');
+        const nextBtn = document.getElementById('next-slide');
+        const dots = document.querySelectorAll('.dot-indicator');
+        
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let slideInterval;
+
+        function updateSlider() {
+            heroSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-white/50', 'w-2');
+                    dot.classList.add('bg-white', 'w-5');
+                } else {
+                    dot.classList.remove('bg-white', 'w-5');
+                    dot.classList.add('bg-white/50', 'w-2');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide();
+            slideInterval = setInterval(nextSlide, 4500);
+        }
+
+        function stopAutoSlide() {
+            if (slideInterval) clearInterval(slideInterval);
+        }
+
+        nextBtn.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
+        prevBtn.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+                startAutoSlide();
+            });
+        });
+
+        updateSlider();
+        startAutoSlide();
+
+        // Petro Hero Image Slideshow
+        const petroSlider = document.getElementById('petro-slider');
+        const petroPrevBtn = document.getElementById('petro-prev-slide');
+        const petroNextBtn = document.getElementById('petro-next-slide');
+        const petroDots = document.querySelectorAll('.petro-dot-indicator');
+        
+        let petroCurrentSlide = 0;
+        const petroTotalSlides = 5;
+        let petroSlideInterval;
+
+        function updatePetroSlider() {
+            petroSlider.style.transform = `translateX(-${petroCurrentSlide * 100}%)`;
+            petroDots.forEach((dot, index) => {
+                if (index === petroCurrentSlide) {
+                    dot.classList.remove('bg-white/50', 'w-2');
+                    dot.classList.add('bg-white', 'w-5');
+                } else {
+                    dot.classList.remove('bg-white', 'w-5');
+                    dot.classList.add('bg-white/50', 'w-2');
+                }
+            });
+        }
+
+        function nextPetroSlide() {
+            petroCurrentSlide = (petroCurrentSlide + 1) % petroTotalSlides;
+            updatePetroSlider();
+        }
+
+        function prevPetroSlide() {
+            petroCurrentSlide = (petroCurrentSlide - 1 + petroTotalSlides) % petroTotalSlides;
+            updatePetroSlider();
+        }
+
+        function startPetroAutoSlide() {
+            stopPetroAutoSlide();
+            petroSlideInterval = setInterval(nextPetroSlide, 4500);
+        }
+
+        function stopPetroAutoSlide() {
+            if (petroSlideInterval) clearInterval(petroSlideInterval);
+        }
+
+        petroNextBtn.addEventListener('click', () => { nextPetroSlide(); startPetroAutoSlide(); });
+        petroPrevBtn.addEventListener('click', () => { prevPetroSlide(); startPetroAutoSlide(); });
+
+        petroDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                petroCurrentSlide = index;
+                updatePetroSlider();
+                startPetroAutoSlide();
+            });
+        });
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const statusBox = document.getElementById('form-status');
+            
+            // Success Status Design & Animation
+            statusBox.className = 'p-4 rounded-2xl text-xs font-medium flex items-center gap-3 bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 shadow-sm opacity-100';
+            statusBox.innerHTML = `
+                <i class="fa-solid fa-circle-check text-base shrink-0"></i>
+                <div>
+                    <strong class="font-bold block">Message Sent Successfully!</strong>
+                    <span>Thank you for reaching out. Our team will contact you soon.</span>
+                </div>
+            `;
+            statusBox.classList.remove('hidden');
+            
+            // Reset Form
+            event.target.reset();
+
+            setTimeout(() => {
+                statusBox.classList.add('opacity-0');
+                setTimeout(() => statusBox.classList.add('hidden'), 300);
+            }, 5000);
+        }
+
+        // Search Button & Enter Key Event Listener
+        const searchInputEl = document.getElementById('searchInput');
+        const searchBtnEl = document.getElementById('searchBtn');
+
+        function performSearch() {
+            const query = searchInputEl.value.trim();
+            if (query) {
+                window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+            }
+        }
+
+        if (searchBtnEl) {
+            searchBtnEl.addEventListener('click', performSearch);
+        }
+
+        if (searchInputEl) {
+            searchInputEl.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        updatePetroSlider();
+        startPetroAutoSlide();
+    </script>
+    
+</body>
+</html>

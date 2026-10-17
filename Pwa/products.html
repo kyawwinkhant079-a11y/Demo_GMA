@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/GMA_Logo.jpg" type="image/x-icon" />
+    <title>Products Showcase - Golden Myanmar Alliance</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d',
+                            400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f',
+                        },
+                        brand: { gold: '#D4AF37', navy: '#0F172A' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.03);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-input {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-slate-100 via-amber-50/30 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-amber-500 selection:text-white transition-colors duration-300 min-h-screen relative flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/40 dark:border-slate-800/40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img class="h-10 w-auto object-contain" src="images/GMA-logo-removebg-preview.png" alt="GMA Logo">
+                <div class="flex flex-col justify-center border-l border-slate-300/60 dark:border-slate-700/60 pl-3">
+                    <span class="font-extrabold text-slate-900 dark:text-white tracking-wider block leading-none text-sm">GMA</span>
+                    <span class="text-[8px] text-amber-600 dark:text-amber-400 font-bold tracking-tight uppercase block mt-0.5">Product Catalog</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="px-4 py-2 rounded-full glass-card hover:bg-white/80 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-2 w-9 h-9 rounded-full glass-card hover:bg-white/80 dark:hover:bg-slate-800/80 text-slate-600 dark:text-amber-400 transition-all flex items-center justify-center shadow-sm">
+                    <i id="theme-icon" class="fa-regular fa-lightbulb text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Page Title & Search Bar Section -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <span class="inline-block text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 glass-card px-3 py-1 rounded-full">Exhibition & Showcase</span>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white uppercase tracking-tight">
+                Our Advanced <span class="text-amber-600 dark:text-amber-400">Medical & Energy Products</span>
+            </h1>
+            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto font-normal">
+                Explore our certified medical equipment, ICU suites, and petroleum solutions. Browse specifications, view detailed descriptions, and download official PDF brochures.
+            </p>
+
+            <!-- Search Bar Control -->
+            <div class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-3 pt-2">
+                <div class="relative flex-grow">
+                    <input type="text" id="search-input" placeholder="Search products by name or keyword..." class="w-full glass-input focus:bg-white/90 dark:focus:bg-slate-900/90 focus:border-amber-500 rounded-full py-3 pl-11 pr-4 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 shadow-inner outline-none transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div id="category-filters" class="flex flex-wrap justify-center gap-2 pt-2">
+                <button data-category="all" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-amber-500 text-white shadow-md">All Products</button>
+                <button data-category="Medical Equipment" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200">Medical Equipment</button>
+                <button data-category="ICU & Surgical" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200">ICU & Surgical</button>
+                <button data-category="Diagnostics" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200">Diagnostics</button>
+                <button data-category="Petroleum & Energy" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200">Petroleum & Energy</button>
+            </div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="pagination-container" class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 px-2">
+            <div class="text-xs text-slate-600 dark:text-slate-400" id="pagination-info">
+                Showing 1-10 of 50 products
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="prev-page-btn" class="px-4 py-2 rounded-full glass-card hover:bg-amber-500 hover:text-white text-xs font-bold transition-all disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2">
+                    <i class="fa-solid fa-chevron-left"></i> Previous
+                </button>
+                <span id="page-indicator" class="text-xs font-bold px-3 py-1 rounded-full glass-card">1 / 5</span>
+                <button id="next-page-btn" class="px-4 py-2 rounded-full glass-card hover:bg-amber-500 hover:text-white text-xs font-bold transition-all disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-slate-600 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2">
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden glass-panel rounded-3xl p-12 text-center space-y-4">
+            <i class="fa-solid fa-box-open text-4xl text-amber-500"></i>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white uppercase">No Products Found</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Try searching for a different keyword or category.</p>
+        </div>
+
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl transform scale-95 transition-transform duration-300 relative p-6 sm:p-8 space-y-6" id="modal-content-box">
+            
+            <div class="sticky top-0 z-30 flex justify-end pb-2 -mr-2 -mt-2 bg-transparent pointer-events-none">
+                <button id="close-modal" aria-label="Close modal" class="pointer-events-auto w-10 h-10 rounded-full glass-card bg-white/80 dark:bg-slate-800/90 hover:bg-amber-500 hover:text-white text-slate-700 dark:text-slate-200 flex items-center justify-center shadow-lg transition-all border border-slate-200 dark:border-slate-700">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div id="modal-body-content" class="space-y-6 -mt-8">
+                <!-- Dynamically populated product details -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900/90 dark:bg-slate-950/95 backdrop-blur-md text-slate-400 py-8 text-xs border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 Golden Myanmar Alliance. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="index.html" class="hover:text-slate-300">Home</a>
+                <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const productsData = [
+            {
+                id: 1,
+                name: "Saturn 8000 NMI Digital X-Ray",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Advanced full digital X-ray imaging system with high-resolution detector and low radiation dose.",
+                fullDesc: "The Saturn 8000 NMI is engineered for high-throughput hospitals and clinical environments. Featuring advanced digital flat-panel detectors, it delivers crystal-clear radiological images instantly while ensuring patient safety through minimized radiation exposure. Complete installation and calibration provided by GMA certified engineers.",
+                specs: ["Detector Type: Amorphous Silicon Flat Panel", "Image Resolution: 3.5 lp/mm", "Generator Power: 50kW High Frequency", "Power Supply: 380V / 50Hz"],
+                pdfUrl: "#",
+                relatedIds: [2, 3]
+            },
+            {
+                id: 2,
+                name: "OmniCare ICU Ventilator",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Comprehensive life support ventilator equipped with advanced pediatric and adult breathing modes.",
+                fullDesc: "Designed for intensive care units, the OmniCare ICU Ventilator provides precise oxygen delivery, real-time waveform monitoring, and robust backup battery systems. It supports invasive and non-invasive ventilation modes tailored for critical care patients.",
+                specs: ["Ventilation Modes: V-AC, P-AC, SIMV, CPAP/PSV", "FiO2 Setting: 21% - 100% adjustable", "Screen: 15-inch Touch TFT Display", "Battery Backup: Minimum 120 minutes"],
+                pdfUrl: "#",
+                relatedIds: [1, 4]
+            },
+            {
+                id: 3,
+                name: "NeoScan Ultrasound Diagnostic System",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-definition color Doppler ultrasound machine with multi-frequency transducer probes.",
+                fullDesc: "NeoScan offers superior imaging clarity for cardiology, obstetrics, and general radiology departments. Equipped with speckle reduction technology and ergonomic cart design, it ensures reliable diagnostic confidence.",
+                specs: ["Display: 21.5 inch High-Res LED", "Transducer Ports: 4 Active Ports", "Imaging Modes: B, CFM, PW, M, Power Doppler", "Storage: 1TB SSD with DICOM 3.0"],
+                pdfUrl: "#",
+                relatedIds: [1, 5]
+            },
+            {
+                id: 4,
+                name: "Surgical Operating Theater Light LED-700",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Shadowless shadow-free surgical lighting system with adjustable color temperature and intensity.",
+                fullDesc: "The LED-700 operating theater light provides brilliant, natural illumination with minimal heat emission. Engineered with German LED diodes, it ensures longevity and precise surgical site visibility.",
+                specs: ["Illuminance: 160,000 Lux", "Color Temperature: 3500K - 5000K Adjustable", "LED Lifespan: > 60,000 hours", "Spot Diameter: 120 - 300 mm"],
+                pdfUrl: "#",
+                relatedIds: [2, 6]
+            },
+            {
+                id: 5,
+                name: "Industrial Petro-Grade Lubricant 15W-40",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Heavy-duty diesel engine oil formulated for industrial machinery and transport fleets.",
+                fullDesc: "Distributed in bulk and drums across Myanmar through our energy division, this premium multi-grade oil provides exceptional oxidation stability, soot control, and wear protection under extreme operating temperatures.",
+                specs: ["Viscosity Grade: SAE 15W-40", "API Performance: CI-4 / SL", "Container Size: 200 Litre Steel Drum", "Application: Heavy Machinery & Generators"],
+                pdfUrl: "#",
+                relatedIds: [6]
+            },
+            {
+                id: 6,
+                name: "Emergency Patient Monitoring Stretcher",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Hydraulic emergency trolley with central locking castors and built-in oxygen tank holder.",
+                fullDesc: "Built for trauma and emergency departments, this heavy-duty hydraulic stretcher features smooth height adjustment, Trendelenburg positioning, and radio-lucent backrest for emergency X-rays.",
+                specs: ["Max Load Capacity: 250 kg", "Height Adjustment: 620mm - 950mm", "Castor Diameter: 200mm Central Brake", "Mattress: Waterproof antimicrobial PU"],
+                pdfUrl: "#",
+                relatedIds: [2, 4]
+            },
+            {
+                id: 7,
+                name: "CardioPulse ECG 12-Channel Machine",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-precision 12-channel electrocardiograph with automatic interpretation and built-in thermal printer.",
+                fullDesc: "The CardioPulse ECG machine is designed for rapid and accurate cardiac evaluations in clinics and emergency rooms. It offers advanced filtering algorithms to eliminate baseline wander and ensure clear readings.",
+                specs: ["Leads: 12 Simultaneous Leads", "Display: 10.1 inch Color Touch Screen", "Paper Size: 210mm Thermal Paper", "Data Export: USB, LAN, and DICOM support"],
+                pdfUrl: "#",
+                relatedIds: [1, 3]
+            },
+            {
+                id: 8,
+                name: "BioClean Autoclave Sterilizer 50L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Automatic vertical steam sterilizer for surgical instruments, glassware, and medical waste.",
+                fullDesc: "BioClean 50L features automated sterilization cycles, digital pressure and temperature displays, and multiple safety interlocks to protect operators in busy laboratory and hospital settings.",
+                specs: ["Capacity: 50 Litres", "Sterilization Temp: 121°C - 134°C", "Working Pressure: 0.22 MPa", "Chamber Material: High-grade Stainless Steel"],
+                pdfUrl: "#",
+                relatedIds: [4, 6]
+            },
+            {
+                id: 9,
+                name: "AeroJet Portable Oxygen Concentrator",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Lightweight continuous and pulse flow oxygen concentrator for homecare and travel use.",
+                fullDesc: "Provides reliable medical-grade oxygen on demand. Designed for quiet operation and long battery endurance, making it ideal for patients requiring ambulatory oxygen therapy.",
+                specs: ["Flow Rate: 1 - 5 LPM Adjustable", "Oxygen Purity: 93% ± 3%", "Noise Level: < 40 dB", "Weight: 2.3 kg with battery"],
+                pdfUrl: "#",
+                relatedIds: [2, 6]
+            },
+            {
+                id: 10,
+                name: "PulseWave Multi-Parameter Patient Monitor",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Comprehensive bed-side monitor tracking ECG, SpO2, NIBP, Respiration, and Temperature.",
+                fullDesc: "PulseWave is an essential monitoring unit for ward and ICU applications. It features visual and audible alarms, arrhythmia analysis, and central station network connectivity.",
+                specs: ["Screen: 12.1 inch High Resolution TFT", "Parameters: ECG, SpO2, NIBP, RESP, TEMP, IBP", "Battery: Rechargeable Lithium-ion (4 hours)", "Data Storage: 72-hour trend review"],
+                pdfUrl: "#",
+                relatedIds: [2, 4]
+            },
+            {
+                id: 11,
+                name: "Solaris Hydraulic Operating Table",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Multi-functional electro-hydraulic surgical table designed for general and specialized surgeries.",
+                fullDesc: "Offering extreme flexibility and stable positioning, the Solaris table accommodates diverse surgical postures including Trendelenburg, lateral tilt, and kidney bridge adjustments.",
+                specs: ["Length/Width: 2100mm x 500mm", "Height Adjustment: 700mm - 1000mm", "Max Weight Load: 250 kg", "Control: Hand remote and override panel"],
+                pdfUrl: "#",
+                relatedIds: [2, 4]
+            },
+            {
+                id: 12,
+                name: "InfantCare Neonatal Incubator",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Advanced microcomputer-controlled infant incubator with precise temperature and humidity control.",
+                fullDesc: "Provides a safe, stable microenvironment for premature and critically ill newborns. Includes double-wall hood, air and skin temperature servo-control modes, and low noise levels.",
+                specs: ["Temperature Control Range: 32°C - 38°C", "Humidity Control: 30% - 90% RH", "Alarm System: Power failure, sensor failure, over-temp", "Mattress Tilt: Infinitely adjustable"],
+                pdfUrl: "#",
+                relatedIds: [2, 10]
+            },
+            {
+                id: 13,
+                name: "InfusionPro Dual-Channel Syringe Pump",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-accuracy infusion and syringe pump with anti-bolus system and drug library.",
+                fullDesc: "Designed for precise delivery of medications and anesthesia. Features occlusion pressure detection, wireless data integration, and multiple alarm tiers for patient safety.",
+                specs: ["Compatible Syringes: 10ml, 20ml, 30ml, 50/60ml", "Infusion Rate: 0.1 - 1500 ml/h", "Accuracy: ± 2%", "Display: 4.3 inch Color LCD"],
+                pdfUrl: "#",
+                relatedIds: [2, 10]
+            },
+            {
+                id: 14,
+                name: "MediCentrifuge Hematology Lab Centrifuge",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-speed digital tabletop centrifuge for blood separation and routine lab assays.",
+                fullDesc: "Equipped with brushless DC motor for quiet, maintenance-free operation. Features programmable memory settings, imbalance detection, and automatic lid lock.",
+                specs: ["Max Speed: 6000 RPM", "Max RCF: 4300 x g", "Timer: 1 sec - 99 min", "Capacity: 12 x 15ml tubes"],
+                pdfUrl: "#",
+                relatedIds: [1, 3]
+            },
+            {
+                id: 15,
+                name: "ElectroSurg 300W High-Frequency Diathermy",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Versatile electrosurgical generator for cutting and coagulation across open and laparoscopic procedures.",
+                fullDesc: "Delivers reliable power output with tissue impedance monitoring to minimize collateral thermal damage. Includes independent Monopolar and Bipolar outlets.",
+                specs: ["Max Power: 300 Watts", "Operating Frequency: 500 kHz", "Modes: Pure Cut, Blend, Coag, Bipolar", "Patient Plate Monitoring: REM system"],
+                pdfUrl: "#",
+                relatedIds: [4, 11]
+            },
+            {
+                id: 16,
+                name: "EcoDiesel Premium Engine Oil 20W-50",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-performance lubricant designed for commercial automotive fleets and heavy trucks.",
+                fullDesc: "Formulated to resist thermal breakdown and reduce engine wear under severe tropical operating conditions found across Myanmar industrial sectors.",
+                specs: ["Viscosity Grade: SAE 20W-50", "API Specification: CF-4 / SJ", "Pack Type: 5 Litre & 20 Litre Pails", "Base Oil: Solvent-refined mineral oil"],
+                pdfUrl: "#",
+                relatedIds: [5]
+            },
+            {
+                id: 17,
+                name: "PetroMax Hydraulic ISO VG 68 Oil",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Anti-wear industrial hydraulic fluid engineered for high-pressure pumps and heavy machinery.",
+                fullDesc: "Provides exceptional rust and oxidation inhibition, foam suppression, and filterability for hydraulic systems operating in manufacturing and construction plants.",
+                specs: ["Viscosity Grade: ISO VG 68", "Standard: DIN 51524 Part 2 (HLP)", "Container: 200 Litre Drum", "Demulsibility: Excellent water separation"],
+                pdfUrl: "#",
+                relatedIds: [5, 16]
+            },
+            {
+                id: 18,
+                name: "TurboSync Industrial Gear Oil ISO 220",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Heavy-duty industrial enclosed gear lubricant with extreme pressure (EP) additive technology.",
+                fullDesc: "Protects heavy gearboxes against shock loads, micropitting, and scoring. Ideal for cement mills, mining equipment, and industrial conveyor drives.",
+                specs: ["Viscosity Grade: ISO VG 220", "Performance: US Steel 224, AGMA 9005-E02", "Flash Point: > 220°C", "Packaging: 200 Litre Drum"],
+                pdfUrl: "#",
+                relatedIds: [5, 17]
+            },
+            {
+                id: 19,
+                name: "CleanFlow Submersible Water Pump 3HP",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Stainless steel multi-stage borehole submersible pump for agricultural and municipal supply.",
+                fullDesc: "Built for deep well water extraction with high corrosion resistance and reliable flow rates. Powered by high-efficiency electric motors.",
+                specs: ["Motor Power: 3.0 HP (2.2 kW)", "Max Head: 85 meters", "Max Flow Rate: 12 m3/h", "Outlet Diameter: 2 inch"],
+                pdfUrl: "#",
+                relatedIds: [5]
+            },
+            {
+                id: 20,
+                name: "VoltGuard 10KVA Online UPS System",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "True double-conversion online uninterruptible power supply for servers and medical devices.",
+                fullDesc: "Protects sensitive hospital equipment and laboratory servers from voltage fluctuations, surges, and blackouts with zero transfer time.",
+                specs: ["Capacity: 10 kVA / 9 kW", "Input Voltage: 110V - 300V AC", "Output Factor: 0.9", "Battery Bank: External Cabinet Support"],
+                pdfUrl: "#",
+                relatedIds: [1, 10]
+            },
+            {
+                id: 21,
+                name: "BioAnalyz Semi-Auto Chemistry Analyzer",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Compact clinical chemistry analyzer with touch screen interface and open reagent system.",
+                fullDesc: "Ideal for small to medium laboratories requiring reliable biochemical testing including liver function, kidney function, and lipid profiles.",
+                specs: ["Wavelength Range: 340nm - 670nm", "Flowcell: 32 uL quartz flowcell", "Display: 7-inch Color Touch LCD", "Storage: 300 test programs, 200,000 results"],
+                pdfUrl: "#",
+                relatedIds: [3, 14]
+            },
+            {
+                id: 22,
+                name: "Hematology 3-Part Cell Counter",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Automated veterinary and human blood cell counter providing 21 parameters and 3 histograms.",
+                fullDesc: "Delivers fast and accurate Complete Blood Count (CBC) analysis using impedance method for cell counting and cyanide-free colorimetry for hemoglobin.",
+                specs: ["Throughput: 60 samples per hour", "Sample Volume: 9.8 uL whole blood", "Parameters: WBC, RBC, HGB, PLT, LYM%, MID%, etc.", "Interface: USB, RS232, Network port"],
+                pdfUrl: "#",
+                relatedIds: [3, 14, 21]
+            },
+            {
+                id: 23,
+                name: "UrineScan Pro 11-Parameter Urinalysis Meter",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-throughput automatic urine chemistry analyzer with cold-light reflection source.",
+                fullDesc: "Streamlines urinalysis workflows in clinics and hospital wards. Features rapid test strip reading, thermal printing, and barcode scanner integration.",
+                specs: ["Test Speed: 514 strips / hour (continuous)", "Wavelength: Cold luminescence LED", "Data Memory: 2000 patient results", "Printer: Built-in thermal printer"],
+                pdfUrl: "#",
+                relatedIds: [3, 21]
+            },
+            {
+                id: 24,
+                name: "RayShield Lead Protective Apron 0.5mm Pb",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Ergonomic front-protection X-ray lead apron with shoulder weight distribution pads.",
+                fullDesc: "Manufactured from multi-layer ultra-flexible protective materials, offering 0.5mm lead equivalence attenuation for radiologists and medical staff.",
+                specs: ["Protection Equivalent: 0.5 mm Pb", "Material: Natural rubber / multilayer composite", "Design: Front overlap with Velcro belt", "Standard: CE certified / EN 61331-1"],
+                pdfUrl: "#",
+                relatedIds: [1]
+            },
+            {
+                id: 25,
+                name: "OrthoTraction Orthopedic Fracture Table",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Specialized orthopedic surgical table with traction accessories for lower limb procedures.",
+                fullDesc: "Provides unobstructed C-arm fluoroscopy access during femur, tibia, and hip surgeries. Features adjustable traction boots and radiolucent perineal posts.",
+                specs: ["Table Length: 1900mm x 500mm", "Traction Range: 0 - 300 mm", "Lateral Rotation: ± 15°", "Frame Material: Premium Stainless Steel"],
+                pdfUrl: "#",
+                relatedIds: [1, 4, 11]
+            },
+            {
+                id: 26,
+                name: "LapaVision Full HD Endoscopy Camera System",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Medical-grade 1080p endoscopic camera processor with LED light source and medical monitor.",
+                fullDesc: "Delivers vibrant, distortion-free visualization for laparoscopic and arthroscopic surgeries. Features integrated image capture and video recording functions.",
+                specs: ["Sensor: 1/2.8 inch CMOS Full HD", "Resolution: 1920 x 1080 pixels at 60fps", "Outputs: HDMI, DVI, SDI, USB", "Light Source: 100W LED with 20,000hr life"],
+                pdfUrl: "#",
+                relatedIds: [4, 15]
+            },
+            {
+                id: 27,
+                name: "AnesthesiaWork Pro Gas Machine",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Advanced anesthesia workstation with integrated ventilator, dual vaporizer mounts, and CO2 scrubber.",
+                fullDesc: "Designed for general anesthesia delivery across adult and pediatric patients. Features electronic PEEP, fresh gas decoupling, and comprehensive respiratory gas monitoring.",
+                specs: ["Ventilation Modes: IPPV, PCV, SIMV, SIGH", "Flowmeters: O2, N2O, Air electronic control", "Vaporizer Mounts: Selectatec dual slots", "Backup Power: Built-in battery > 90 mins"],
+                pdfUrl: "#",
+                relatedIds: [2, 4, 13]
+            },
+            {
+                id: 28,
+                name: "DefibLife Biphasic Manual Defibrillator",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Portable defibrillator monitor with AED mode, external pacing, and synchronized cardioversion.",
+                fullDesc: "Essential emergency resuscitation device providing exponential truncated biphasic waveforms for efficient defibrillation with minimal myocardial injury.",
+                specs: ["Energy Range: 1 to 360 Joules adjustable", "Screen: 7-inch high contrast color display", "AED Function: Voice and text prompts", "Battery: 200 full-charge shocks"],
+                pdfUrl: "#",
+                relatedIds: [2, 6, 10]
+            },
+            {
+                id: 29,
+                name: "SuctionMaster Heavy-Duty Surgical Aspirator",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-capacity dual-jar medical suction unit with oil-free piston vacuum pump.",
+                fullDesc: "Designed for operating theaters and emergency wards to aspirate thick fluids, blood, and secretions quickly and reliably.",
+                specs: ["Max Vacuum: > 0.09 MPa (-750 mmHg)", "Flow Rate: > 40 Litres / minute", "Collection Bottles: 2 x 2500ml Polycarbonate", "Noise Level: < 50 dB"],
+                pdfUrl: "#",
+                relatedIds: [2, 4, 6]
+            },
+            {
+                id: 30,
+                name: "SterilizerClean Ultrasonic Bath 30L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Digital ultrasonic cleaner for pre-sterilization cleaning of surgical and dental instruments.",
+                fullDesc: "Utilizes high-frequency cavitation bubbles to remove blood, tissue, and organic debris from complex surgical instruments prior to autoclaving.",
+                specs: ["Tank Capacity: 30 Litres", "Ultrasonic Frequency: 40 kHz", "Heating Power: 500W adjustable up to 80°C", "Timer Range: 1 - 99 minutes digital"],
+                pdfUrl: "#",
+                relatedIds: [8]
+            },
+            {
+                id: 31,
+                name: "SolarPanel 550W Monocrystalline PV Module",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-efficiency half-cut PERC solar panel for commercial and residential solar installations.",
+                fullDesc: "Delivers maximum power generation even under low-light conditions. Features robust anodized aluminum frames and anti-reflective glass coating.",
+                specs: ["Max Power (Pmax): 550W", "Module Efficiency: 21.5%", "Cell Type: Monocrystalline Half-Cell", "Dimensions: 2279 x 1134 x 35 mm"],
+                pdfUrl: "#",
+                relatedIds: [20]
+            },
+            {
+                id: 32,
+                name: "InverterPro 5kW Hybrid Solar Inverter",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Pure sine wave single-phase hybrid solar inverter with built-in MPPT charge controller.",
+                fullDesc: "Manages power flow seamlessly between solar arrays, battery storage, and grid utility. Supports parallel expansion and remote Wi-Fi monitoring.",
+                specs: ["Rated Power: 5000W / 5kVA", "MPPT Voltage Range: 120V - 450V DC", "Max PV Input: 6000W", "Battery Compatibility: 48V Lithium / Lead-Acid"],
+                pdfUrl: "#",
+                relatedIds: [20, 31]
+            },
+            {
+                id: 33,
+                name: "LithiumPower 48V 100Ah Rack Battery",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "LiFePO4 rechargeable energy storage battery pack with intelligent BMS for solar systems.",
+                fullDesc: "Offers long cycle life, high discharge current, and maintenance-free operation for off-grid and backup power applications.",
+                specs: ["Nominal Voltage: 48V DC", "Capacity: 100 Ah (4.8 kWh)", "Cycle Life: > 6000 cycles at 80% DOD", "Communication: CAN / RS485"],
+                pdfUrl: "#",
+                relatedIds: [20, 32]
+            },
+            {
+                id: 34,
+                name: "GenSet 50KVA Diesel Generator",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Soundproof diesel generator powered by heavy-duty Ricardo water-cooled diesel engine.",
+                fullDesc: "Provides reliable prime and standby power for clinics, commercial offices, and telecom towers across Myanmar. Features AMF automatic transfer control panel.",
+                specs: ["Prime Power: 45 kW / 50 kVA", "Engine: 4-cylinder water-cooled diesel", "Fuel Tank Capacity: 120 Litres", "Sound Level: 68 dB at 7 meters"],
+                pdfUrl: "#",
+                relatedIds: [5, 20]
+            },
+            {
+                id: 35,
+                name: "Transformer 100KVA Step-Down 415V to 220V",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Three-phase dry-type power distribution transformer with copper windings.",
+                fullDesc: "Engineered for industrial facilities and large buildings to step down distribution voltage safely with high thermal efficiency and low core loss.",
+                specs: ["Rated Capacity: 100 kVA", "Primary Voltage: 415V AC 3-Phase", "Secondary Voltage: 220V / 380V AC", "Cooling Type: AN (Air Natural)"],
+                pdfUrl: "#",
+                relatedIds: [34]
+            },
+            {
+                id: 36,
+                name: "Optima Dental Unit Hydraulic Chair",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Complete dental treatment chair with LED operating light, suction system, and dentist stool.",
+                fullDesc: "Designed for patient comfort and dentist ergonomics. Features programmable memory positions, ceramic cuspidor bowl, and built-in water purification system.",
+                specs: ["Chair Movement: Silent DC motorized drive", "Delivery System: Hanging hose tray", "Operating Light: Sensor LED dual intensity", "Upholstery: Seamless microfiber leather"],
+                pdfUrl: "#",
+                relatedIds: [4, 6]
+            },
+            {
+                id: 37,
+                name: "DentalX Portable Dental X-Ray Unit",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-frequency handheld dental X-ray camera compatible with digital sensors and film.",
+                fullDesc: "Provides sharp intraoral imaging with minimal radiation leakage. Lightweight design allows easy one-handed operation in dental clinics.",
+                specs: ["Tube Voltage: 60 kV", "Tube Current: 2 mA", "Exposure Time: 0.01 - 2.0 seconds", "Battery: Rechargeable Lithium-ion"],
+                pdfUrl: "#",
+                relatedIds: [1, 36]
+            },
+            {
+                id: 38,
+                name: "Autoclave Dental Class B Sterilizer 22L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "European Class B vacuum steam sterilizer designed specifically for dental handpieces and tools.",
+                fullDesc: "Ensures complete sterilization of wrapped and unwrapped hollow instruments through fractional pre-vacuum pulses and rapid drying cycles.",
+                specs: ["Chamber Capacity: 22 Litres", "Sterilization Class: EN 13060 Class B", "Pressure: 0.21 - 0.23 MPa", "Printer: Built-in thermal data logger"],
+                pdfUrl: "#",
+                relatedIds: [8, 36]
+            },
+            {
+                id: 39,
+                name: "PharmaFridge Medical Refrigerator 400L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Professional pharmacy refrigerator for safe storage of vaccines, medicines, and biological samples.",
+                fullDesc: "Features microcomputer temperature control, forced-air circulation, acoustic and visual alarm systems, and double-pane glass doors.",
+                specs: ["Capacity: 400 Litres", "Temperature Range: 2°C to 8°C", "Controller: Digital microprocessor with LED display", "Backup System: Built-in data logger and battery alarm"],
+                pdfUrl: "#",
+                relatedIds: [12]
+            },
+            {
+                id: 40,
+                name: "UltraFreezer -86°C Laboratory Deep Freezer",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Upright ultra-low temperature freezer for long-term storage of vaccines, blood plasma, and DNA.",
+                fullDesc: "Equipped with VIP vacuum insulation panels and dual compressor cascade refrigeration systems for ultimate temperature stability and energy efficiency.",
+                specs: ["Capacity: 508 Litres", "Temperature Range: -40°C to -86°C", "Refrigerant: HC blend eco-friendly", "Security: Key lock, padlocking, password protection"],
+                pdfUrl: "#",
+                relatedIds: [39]
+            },
+            {
+                id: 41,
+                name: "ErgoCare Hospital Bed 3-Function Electric",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Electric medical ward bed with backrest, knee-break, and height adjustment functions.",
+                fullDesc: "Designed for general ward patient comfort and nursing convenience. Features detachable ABS head/foot boards, collapsible side rails, and central braking castors.",
+                specs: ["Dimensions: 2150 x 950 x 500-750 mm", "Backrest Angle: 0° - 75°", "Knee-rest Angle: 0° - 40°", "Safe Working Load: 250 kg"],
+                pdfUrl: "#",
+                relatedIds: [6, 10]
+            },
+            {
+                id: 42,
+                name: "Overbed Trauma Traction Frame Set",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Stainless steel orthopedic traction frame attachment for standard hospital beds.",
+                fullDesc: "Allows continuous skeletal or skin traction therapy for patients recovering from bone fractures and spinal injuries.",
+                specs: ["Material: 304 Stainless Steel", "Compatibility: Fits standard manual and electric beds", "Accessories: Pulleys, weights, and rope sets included", "Adjustment: Telescopic height poles"],
+                pdfUrl: "#",
+                relatedIds: [41]
+            },
+            {
+                id: 43,
+                name: "MediCart Emergency Crash Cart Trolley",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Lockable emergency resuscitation trolley with 5 drawers, IV pole, and cardiac board.",
+                fullDesc: "Organized storage for emergency medicines, intubation kits, and resuscitation tools. Features central locking mechanism and silent rolling castors.",
+                specs: ["Dimensions: 750 x 475 x 920 mm", "Drawers: 2 small, 2 middle, 1 big drawer with dividers", "Accessories: IV pole, defibrillator shelf, waste bin", "Material: Aluminum alloy columns with ABS body"],
+                pdfUrl: "#",
+                relatedIds: [6, 28]
+            },
+            {
+                id: 44,
+                name: "NebulizerPro Ultrasonic Mesh Nebulizer",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Silent portable mesh nebulizer for asthma and COPD respiratory medication delivery.",
+                fullDesc: "Produces ultra-fine particle mist for efficient lower respiratory tract penetration. Extremely quiet and compact for adult and pediatric home use.",
+                specs: ["Particle Size (MMAD): ≤ 2.5 um", "Nebulization Rate: ≥ 0.25 ml/min", "Medication Cup Capacity: 10 ml", "Power: USB rechargeable or AA batteries"],
+                pdfUrl: "#",
+                relatedIds: [9]
+            },
+            {
+                id: 45,
+                name: "VeinFinder Infrared Vascular Imaging Device",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Handheld vein illumination device displaying blood vessel maps directly onto skin surface.",
+                fullDesc: "Assists doctors and nurses in locating superficial veins quickly for venipuncture, reducing failed punctures and patient discomfort in pediatric and geriatric care.",
+                specs: ["Light Detection: Near-infrared light safely without laser", "Display Colors: Green, white, inverse color options", "Battery Life: Continuous working > 3 hours", "Weight: 350 grams"],
+                pdfUrl: "#",
+                relatedIds: [1, 3]
+            },
+            {
+                id: 46,
+                name: "PulseOximeter Fingertip OLED Medical Grade",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Portable digital blood oxygen saturation SpO2 and pulse rate monitor.",
+                fullDesc: "Provides fast spot-check measurements of arterial hemoglobin oxygen saturation and pulse rate. Features dual-color OLED rotating display.",
+                specs: ["SpO2 Measuring Range: 70% - 99%", "Pulse Rate Range: 30 - 240 bpm", "Accuracy: ± 2% on SpO2", "Power: 2 x AAA Alkaline batteries"],
+                pdfUrl: "#",
+                relatedIds: [10, 44]
+            },
+            {
+                id: 47,
+                name: "ThermoScan Infrared Non-Contact Thermometer",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Clinical infrared forehead thermometer with instant one-second temperature reading.",
+                fullDesc: "Enables non-contact hygienic temperature screening for hospitals, clinics, schools, and offices with high precision sensor technology.",
+                specs: ["Measuring Distance: 3 - 5 cm", "Body Temperature Range: 32.0°C - 43.0°C", "Accuracy: ± 0.2°C", "Memory: 32 previous reading recall"],
+                pdfUrl: "#",
+                relatedIds: [10]
+            },
+            {
+                id: 48,
+                name: "BtoP Asphalt Penetration Grade 60/70",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Premium petroleum bitumen binder used for road construction and asphalt pavement surfacing.",
+                fullDesc: "Imported petroleum grade bitumen offering excellent adhesive, weathering, and viscoelastic properties for highway construction and maintenance projects across Myanmar.",
+                specs: ["Penetration at 25°C: 60 - 70 dmm", "Softening Point: 46°C - 56°C", "Ductility at 25°C: Min 100 cm", "Packing: 150kg galvanized steel drums"],
+                pdfUrl: "#",
+                relatedIds: [5, 16]
+            },
+            {
+                id: 49,
+                name: "FurnaceFuel Industrial Light Diesel Oil (LDO)",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Clean-burning industrial heating fuel distillate for boilers, kilns, and thermal furnaces.",
+                fullDesc: "Provides high calorific value and consistent combustion efficiency for manufacturing plants, textile mills, and brick kiln operations.",
+                specs: ["Flash Point: Min 66°C", "Density at 15°C: 0.82 - 0.88 g/cm3", "Kinematic Viscosity: 2.0 - 7.5 cSt at 40°C", "Sulfur Content: Max 0.5%"],
+                pdfUrl: "#",
+                relatedIds: [5, 34]
+            },
+            {
+                id: 50,
+                name: "SolarStreet Light 100W All-In-One LED",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Integrated solar LED street light with motion sensor and dusk-to-dawn automatic controller.",
+                fullDesc: "Completely self-contained outdoor lighting system featuring high-efficiency monocrystalline solar panels, LiFePO4 battery, and bright SMD LEDs.",
+                specs: ["LED Power: 100W Brightness (12000 Lumens)", "Solar Panel: 60W Mono PV", "Battery Capacity: 3.2V 50Ah LiFePO4", "Waterproof Rating: IP65 Outdoor Weatherproof"],
+                pdfUrl: "#",
+                relatedIds: [31, 33]
+            },
+            {
+                id: 51,
+                name: "MedicalOxygen High-Pressure Steel Cylinder 40L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Seamless steel medical oxygen gas cylinder complete with pressure regulator and humidifier bottle.",
+                fullDesc: "Reliable oxygen storage vessel tested to high safety standards, ideal for hospital wards, clinics, and emergency ambulatory deployment.",
+                specs: ["Water Capacity: 40 Litres (~6.0 cubic meters gas)", "Working Pressure: 15 MPa", "Standard Thread: CGA540 or G5/8 valve", "Material: High-grade alloy steel 30CrMo"],
+                pdfUrl: "#",
+                relatedIds: [2, 9]
+            },
+            {
+                id: 52,
+                name: "MedBag First Aid Trauma Responder Backpack",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Water-resistant tactical medical emergency backpack with modular internal pouches.",
+                fullDesc: "Designed for paramedics and disaster response teams. Features reflective safety strips, organized compartments for bandages, airways, and emergency instruments.",
+                specs: ["Dimensions: 48 x 35 x 20 cm", "Material: High-density 1000D Oxford waterproof fabric", "Compartments: 6 detachable labeled pouches", "Color: High-visibility Red with reflective cross"],
+                pdfUrl: "#",
+                relatedIds: [6, 28]
+            },
+            {
+                id: 53,
+                name: "SurgicalScialytic Headlamp LED High-Intensity",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Portable surgical headlight with adjustable beam focus and rechargeable waist battery pack.",
+                fullDesc: "Provides shadow-free coaxial illumination directly to surgical and dental fields. Lightweight headband design ensures comfort during long operations.",
+                specs: ["Illuminance: 40,000 Lux", "Color Temperature: 5500K daylight", "Battery Duration: 6 hours continuous use", "Spot Size: Adjustable 10 - 90 mm at 40cm"],
+                pdfUrl: "#",
+                relatedIds: [4, 36]
+            },
+            {
+                id: 54,
+                name: "Biohazard Waste Bin Foot-Pedal 50L",
+                category: "Medical Equipment",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Heavy-duty yellow infectious medical waste pedal bin with biohazard symbol.",
+                fullDesc: "Mandatory hospital waste disposal container designed for safe containment of contaminated materials, syringes, and dressings.",
+                specs: ["Capacity: 50 Litres", "Mechanism: Hands-free foot pedal lid opening", "Material: Chemical-resistant HDPE plastic", "Color: Biohazard Yellow with international warning label"],
+                pdfUrl: "#",
+                relatedIds: [8, 30]
+            },
+            {
+                id: 55,
+                name: "AutoSyringe Infusion Pump Single Channel",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Precise single syringe infusion pump with anti-reverse gear and digital flow rate control.",
+                fullDesc: "Ensures smooth delivery of critical intravenous drugs and chemotherapy agents with multi-level occlusion pressure alarms.",
+                specs: ["Compatible Syringes: 10ml, 20ml, 30ml, 50ml", "Flow Rate Range: 0.1 ml/h to 1200 ml/h", "Accuracy: within ± 2%", "Display Screen: Bright LED with battery indicator"],
+                pdfUrl: "#",
+                relatedIds: [2, 13]
+            },
+            {
+                id: 56,
+                name: "XRay Protective Lead Glass Window Panel",
+                category: "Diagnostics",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-transparency radiation shielding lead glass for X-ray control room observation.",
+                fullDesc: "Provides clear visibility for radiology technicians while offering certified X-ray attenuation protection in hospital control booths.",
+                specs: ["Lead Equivalence: 2.0 mm Pb", "Standard Size: 1200 x 800 mm (Custom sizes available)", "Light Transmittance: > 85%", "Surface: Polished optical grade"],
+                pdfUrl: "#",
+                relatedIds: [1, 24]
+            },
+            {
+                id: 57,
+                name: "SterileSurg Disposable Surgical Gown Pack",
+                category: "ICU & Surgical",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "Reinforced sterile surgical gowns with hand towels in EO sterilized individual peel packs.",
+                fullDesc: "Manufactured from fluid-resistant SMS non-woven fabric, providing breathable comfort and reliable barrier protection against blood-borne pathogens.",
+                specs: ["Material: 45gsm SMS fluid-repellent fabric", "Sterilization: Ethylene Oxide (EO)", "Size: Extra Large (XL) with knit cuffs", "Packaging: Individually sterile packed"],
+                pdfUrl: "#",
+                relatedIds: [4, 15]
+            },
+            {
+                id: 58,
+                name: "EcoLubricant Synthetic Grease NLGI 2",
+                category: "Petroleum & Energy",
+                image: "images/S11-Plus.jpg",
+                shortDesc: "High-temperature lithium complex extreme pressure grease for industrial wheel bearings.",
+                fullDesc: "Protects heavy-duty bearings against high shock loads, water washout, and high thermal oxidation in industrial and automotive applications.",
+                specs: ["Thickener Type: Lithium Complex", "NLGI Grade: 2", "Dropping Point: > 260°C", "Container: 15 kg plastic pail"],
+                pdfUrl: "#",
+                relatedIds: [5, 16]
+            }
+        ];
+
+        // DOM Elements
+        const productsGrid = document.getElementById('products-grid');
+        const searchInput = document.getElementById('search-input');
+        const categoryFilters = document.querySelectorAll('.category-btn');
+        const noResults = document.getElementById('no-results');
+        const productModal = document.getElementById('product-modal');
+        const modalContentBox = document.getElementById('modal-content-box');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modalBodyContent = document.getElementById('modal-body-content');
+        
+        const prevPageBtn = document.getElementById('prev-page-btn');
+        const nextPageBtn = document.getElementById('next-page-btn');
+        const pageIndicator = document.getElementById('page-indicator');
+        const paginationInfo = document.getElementById('pagination-info');
+        const paginationContainer = document.getElementById('pagination-container');
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // URL Parameters ကို စစ်ဆေးပြီး Search နှင့် Category ကို အလိုအလျောက် သတ်မှတ်ခြင်း
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlSearch = urlParams.get('search');
+
+        if (urlSearch) {
+            searchQuery = urlSearch;
+            searchInput.value = urlSearch;
+            
+            // Category တွေထဲမှာ URL search နဲ့ စတင်တဲ့ category ရှိမရှိ စစ်ဆေးခြင်း (ဥပမာ - "pet" -> "Petroleum & Energy")
+            const matchedBtn = Array.from(categoryFilters).find(btn => {
+                const cat = btn.getAttribute('data-category');
+                return cat.toLowerCase().startsWith(urlSearch.toLowerCase());
+            });
+
+            if (matchedBtn) {
+                categoryFilters.forEach(b => {
+                    b.className = 'category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200';
+                });
+                matchedBtn.className = 'category-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-amber-500 text-white shadow-md';
+                currentCategory = matchedBtn.getAttribute('data-category');
+            }
+        }
+
+        // Render Products Function
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+
+            const filtered = productsData.filter(product => {
+                const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      product.shortDesc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+                paginationContainer.classList.add('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+                paginationContainer.classList.remove('hidden');
+            }
+
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedItems = filtered.slice(startIndex, endIndex);
+
+            paginatedItems.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800/50 shadow-sm hover:shadow-lg hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-100 overflow-hidden bg-slate-900">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                            <span class="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider text-amber-500 glass-card px-3 py-1 rounded-full">${product.category}</span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wide group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">${product.name}</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed">${product.shortDesc}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openProductModal(${product.id})" class="w-full py-2.5 rounded-full bg-amber-500/10 hover:bg-amber-500 text-amber-600 dark:text-amber-400 hover:text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2">
+                            View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+
+            paginationInfo.textContent = `Showing ${startIndex + 1}-${Math.min(endIndex, filtered.length)} of ${filtered.length} products`;
+            pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+            
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderProducts();
+                window.scrollTo({ top: 300, behavior: 'smooth' });
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            const filtered = productsData.filter(product => {
+                const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      product.shortDesc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderProducts();
+                window.scrollTo({ top: 300, behavior: 'smooth' });
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            currentPage = 1;
+            renderProducts();
+        });
+
+        categoryFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryFilters.forEach(b => {
+                    b.className = 'category-btn px-4 py-2 rounded-full text-xs font-bold transition-all glass-card hover:bg-amber-500/20 text-slate-700 dark:text-slate-200';
+                });
+                btn.className = 'category-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-amber-500 text-white shadow-md';
+                currentCategory = btn.getAttribute('data-category');
+                currentPage = 1;
+                renderProducts();
+            });
+        });
+
+        window.openProductModal = function(id) {
+            const product = productsData.find(p => p.id === id);
+            if (!product) return;
+
+            let relatedHtml = '';
+            if (product.relatedIds && product.relatedIds.length > 0) {
+                const relatedItems = productsData.filter(p => product.relatedIds.includes(p.id));
+                relatedHtml = `
+                    <div class="space-y-4 pt-6 border-t border-slate-200/50 dark:border-slate-800/50">
+                        <h4 class="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-sm">Related Products</h4>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            ${relatedItems.map(rel => `
+                                <div onclick="openProductModal(${rel.id})" class="glass-card p-3 rounded-2xl flex items-center gap-3 cursor-pointer hover:border-amber-500 transition-all">
+                                    <img src="${rel.image}" alt="${rel.name}" class="w-14 h-14 rounded-xl object-cover">
+                                    <div class="overflow-hidden">
+                                        <span class="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase">${rel.category}</span>
+                                        <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">${rel.name}</h5>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            modalBodyContent.innerHTML = `
+                <div class="grid md:grid-cols-12 gap-6 items-start">
+                    <div class="md:col-span-5 rounded-2xl overflow-hidden shadow-lg bg-slate-900">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="md:col-span-7 space-y-4">
+                        <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 glass-card px-3 py-1 rounded-full">${product.category}</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">${product.name}</h2>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${product.fullDesc}</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">Technical Specifications</h4>
+                            <ul class="space-y-1.5">
+                                ${product.specs.map(spec => `
+                                    <li class="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+                                        <i class="fa-solid fa-circle-check text-amber-500 text-[10px]"></i>
+                                        <span>${spec}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="pt-4 flex flex-wrap gap-3">
+                            <a href="${product.pdfUrl}" target="_blank" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf"></i> Download PDF Brochure
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                ${relatedHtml}
+            `;
+
+            productModal.classList.remove('hidden');
+            setTimeout(() => {
+                productModal.classList.remove('opacity-0');
+                modalContentBox.classList.remove('scale-95');
+                modalContentBox.classList.add('scale-100');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+        };
+
+        function closeModalFunc() {
+            productModal.classList.add('opacity-0');
+            modalContentBox.classList.remove('scale-100');
+            modalContentBox.classList.add('scale-95');
+            setTimeout(() => {
+                productModal.classList.add('hidden');
+            }, 300);
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        closeModalBtn.addEventListener('click', closeModalFunc);
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) closeModalFunc();
+        });
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        function updateThemeIcon() {
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.className = 'fa-solid fa-lightbulb text-sm';
+            } else {
+                themeIcon.className = 'fa-regular fa-lightbulb text-sm';
+            }
+        }
+
+        updateThemeIcon();
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        });
+
+        // Initial Load
+        renderProducts();
+    </script>
+</body>
+</html>
